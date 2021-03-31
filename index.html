@@ -24,15 +24,26 @@
 
 <div id="logo"><img class="logopat" src="https://raw.githubusercontent.com/josh-here/patterns-auto/58171b8dae961c52e94e493f57e2e25497b2f64e/logo.svg" alt="logo"></div>
 
-
-<!-- partial:index.partial.html -->
+<div id="svgpat">
 <svg class="scene" id="illustration" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-labelledby="svgTitle svgDesc" role="img">
   <title id="svgTitle">A generative illustration</title>
   <desc id="svgDesc">Click on the image to redraw it!</desc>
 </svg>
 
+</div>
+
+<div id="btns">
+
+<button id="btn_export_jpeg">EXPORT JPEG</button>
+
+<button id="btn_export_png">EXPORT PNG</button>
 
 <button id="btn_export_svg">EXPORT SVG</button>
+
+<button id="btn_copy_svg" name="copy">COPY SVG</button>
+
+
+</div>
 
 </div>
 
@@ -49,6 +60,9 @@
 <script>
 
 
+
+//SVG EXPORT
+
   document.querySelector("#btn_export_svg").onclick = function(){
               
   svgExport.downloadSvg(
@@ -58,8 +72,67 @@
   );
           };
          
+
+
+
+
+
+
+//PNG EXPORT
+
+
   
-  
+        document.querySelector("#btn_export_png").onclick = function(){
+            svgExport.downloadPng(document.querySelector("#illustration"), "myPattern",
+            
+            );
+        };
+
+
+
+
+
+
+
+
+
+
+//JPEG EXPORT
+
+
+
+document.querySelector("#btn_export_jpeg").onclick = function(){
+            svgExport.downloadJpeg(document.querySelector("#illustration"), "myPattern");
+        };
+
+
+
+
+
+
+
+
+//COPY SVG
+
+
+function copy() {
+  var v = $("#svgpat").html().toString(),
+      temp = document.createElement("textarea");
+  temp.value = v;
+  $("body").append(temp);
+  temp.select();
+  document.execCommand("copy");
+  temp.remove();
+  $("#btn_copy_svg").html("SVG COPIED!");
+  $("#btn_copy_svg").addClass("change");
+  setTimeout(
+    function(){ $("#btn_copy_svg").html("COPY SVG");
+               $("#btn_copy_svg").removeClass("change");
+  }, 2000);
+}
+
+$("#btn_copy_svg").on("click", copy);
+
   </script>
 
 </body>
